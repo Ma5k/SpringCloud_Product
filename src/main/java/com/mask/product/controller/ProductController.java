@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +17,7 @@ import com.mask.product.VO.ProductVO;
 import com.mask.product.VO.ResultVO;
 import com.mask.product.dataobject.ProductCategory;
 import com.mask.product.dataobject.ProductInfo;
+import com.mask.product.dto.CartDTO;
 import com.mask.product.service.CategoryService;
 import com.mask.product.service.ProductService;
 import com.mask.product.utils.ResultVOUtil;
@@ -70,4 +73,19 @@ public class ProductController {
         
         return ResultVOUtil.success(productVOList);
     }
+
+	/**
+	 * 获取商品列表（给订单服务用）
+	 * @param productIdList
+	 * @return
+	 */
+	@PostMapping("/listForOrder")
+	public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
+		return productService.findList(productIdList);
+	}
+	
+	@PostMapping("/decreaseStock")
+	public void decreaseStock(@RequestBody List<CartDTO> cartDTOList) {
+		productService.decreaseStock(cartDTOList);
+	}
 }

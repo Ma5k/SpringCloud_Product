@@ -1,5 +1,6 @@
 package com.mask.product.repository;
 
+import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,4 +24,10 @@ public class ProductInfoRepositoryTest {
 		Assert.assertTrue(list.size() > 0);
 	}
 
+	@Test
+	public void findByProductIdIn() throws Exception {
+		List<ProductInfo> list = productInfoRepository.findByProductIdIn(Arrays.asList("157875196366160022","157875196366160022","157875196366160022"));
+		Assert.assertTrue(list.size() > 0);
+	}
+	
 }
