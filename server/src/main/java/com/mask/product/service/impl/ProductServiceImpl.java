@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
-        List<ProductInfo> productInfoList = decreaseStockProcess(decreaseStockInputList);
+    	List<ProductInfo> productInfoList = decreaseStockProcess(decreaseStockInputList);
 
         //发送mq消息
         List<ProductInfoOutput> productInfoOutputList = productInfoList.stream().map(e -> {
@@ -58,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
             return output;
         }).collect(Collectors.toList());
         amqpTemplate.convertAndSend("productInfo", JsonUtil.toJson(productInfoOutputList));
-
     }
 
     @Transactional
